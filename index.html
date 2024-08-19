@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Night Sky App</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+            font-family: Arial, sans-serif;
+        }
+        
+        #app {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 5s ease-in-out;
+        }
+        
+        #moon-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        #moon-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 20px;
+        }
+        
+        #moon {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #fefcbf;
+            margin: 0 auto;
+            box-shadow: 0 0 40px 20px rgba(250, 240, 190, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        #off-text {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 40px 20px rgba(250, 240, 190, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 60px 30px rgba(250, 240, 190, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 40px 20px rgba(250, 240, 190, 0.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="moon-container">
+            <svg id="moon-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div id="moon"></div>
+            <div id="off-text">OFF</div>
+        </div>
+    </div>
+
+    <script>
+        function createStars() {
+            const app = document.getElementById('app');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random();
+                app.appendChild(star);
+            }
+        }
+
+        function moveStars() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+            });
+        }
+
+        createStars();
+        setInterval(moveStars, 5000);
+    </script>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Menu</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .glass-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .menu-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .option:hover {
+            transform: scale(1.1);
+        }
+        
+        .option:focus {
+            outline: none;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-box">
+        <div class="menu-container">
+            <div class="option" onclick="handleClick('home')" tabindex="0">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Home</span>
+            </div>
+            <div class="option" onclick="navigate('tasks')" tabindex="0">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Tasks</span>
+            </div>
+            <div class="option" onclick="navigate('friend')" tabindex="0">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Friend</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleClick(page) {
+            console.log(`Clicked on ${page}`);
+            // You can add more functionality here if needed
+        }
+
+        function navigate(page) {
+            switch (page) {
+                case 'tasks':
+                    window.location.href = '/tasks';
+                    break;
+                case 'friend':
+                    window.location.href = '/friend';
+                    break;
+            }
+        }
+    </script>
+</body>
+
+
+</html>
